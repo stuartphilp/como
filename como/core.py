@@ -116,36 +116,17 @@ def auto_save():
     <false/>
     <key>Program</key>
     <string>%s</string>
-    <key>StartCalendarInterval</key>
-    <array>
-        <dict>
-          <key>Hour</key>
-          <integer>20</integer>
-          <key>Minute</key>
-          <integer>0</integer>
-        </dict>
-        <dict>
-          <key>Hour</key>
-          <integer>14</integer>
-          <key>Minute</key>
-          <integer>0</integer>
-        </dict>
-        <dict>
-          <key>Hour</key>
-          <integer>8</integer>
-          <key>Minute</key>
-          <integer>0</integer>
-        </dict>
-    </array>
+    <key>StartInterval</key>
+    <integer>10</integer>
 </dict>
 </plist>"""
     if is_osx:
         plist_path = os.path.expanduser(
             "~/Library/LaunchAgents/com.cwoebker.como.plist")
         if os.path.exists(plist_path):
-            os.system("launchctl unload %s" % plist_path)
-            os.remove(plist_path)
-            puts(colored.white("como will only run manually"))
+            # os.system("launchctl unload %s" % plist_path)
+            # os.remove(plist_path)
+            puts(colored.white("como is already running automatically"))
         else:
             with open(plist_path, "w") as plist_file:
                 plist_file.write(
@@ -258,7 +239,7 @@ def cmd_info(args):
             puts("Mac model: %s" % subprocess.check_output(
                 "sysctl -n hw.model", shell=True).rstrip("\n"))
             puts("Age of Computer: %s months" % get_age())
-            puts("Temperature: %s ℃" % (int(bat['temp']) / 100.))
+            # puts("Temperature: %s ℃" % (int(bat['temp']) / 100.))
         if is_osx or is_win:
             puts("Voltage: %s" % bat['voltage'])
             puts("Amperage: %s" % bat['amperage'])
@@ -358,12 +339,12 @@ def cmd_open(args):
 def cmd_init(args):
     cmd_save(args)
     cmd_automate(args)
-    cmd_save(args)  # double save so user sees actual graph on site
-    cmd_upload(args)
-    cmd_open(args)
+    # cmd_save(args)  # double save so user sees actual graph on site
+    # cmd_upload(args)
+    # cmd_open(args)
 
 
 @cmd(help="Automate saving and uploading.")
 def cmd_automate(args):
     auto_save()
-    auto_upload()
+    # auto_upload()

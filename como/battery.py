@@ -77,9 +77,9 @@ def get_battery():
         battery['serial'] = subprocess.check_output(
             'ioreg -w0 -l | grep BatterySerialNumber',
             shell=True).translate(None, '\n "|').lstrip('BatterySerialNumber=')
-        battery['temp'] = int(subprocess.check_output(
-            'ioreg -w0 -l | grep Temperature',
-            shell=True).translate(None, '\n "|').lstrip('Temperature='))
+        # battery['temp'] = int(subprocess.check_output(
+        #     'ioreg -w0 -l | grep Temperature',
+            # shell=True).translate(None, '\n "|').lstrip('Temperature='))
         battery['maxcap'] = int(bat[0].lstrip('MaxCapacity='))
         battery['curcap'] = int(bat[1].lstrip('CurrentCapacity='))
         legacy = bat[2].lstrip('LegacyBatteryInfo=')
